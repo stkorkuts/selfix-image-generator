@@ -1,0 +1,455 @@
+{
+  "2": {
+    "inputs": {
+      "text": "GNAVTRTKN, a stunningly beautiful and successful woman in her early 30s, standing confidently on a bustling New York street, wearing a sleek, tailored black pantsuit with a crisp white blouse, her sharp high heels clicking on the pavement. Her face is the focal point—flawless porcelain skin, high cheekbones, full lips painted in a deep red, and piercing hazel eyes that exude intelligence and determination. Her dark, wavy hair cascades over her shoulders, perfectly styled. The background features iconic New York City skyscrapers, bathed in the golden glow of sunset, with blurred yellow cabs and pedestrians adding to the urban energy. Soft, cinematic lighting highlights her sharp features, casting a slight rim light on her silhouette, while the depth of field ensures her face remains crisp and detailed. The atmosphere is dynamic yet elegant, capturing her powerful presence in the city that never sleeps. Ultra-realistic, hyper-detailed, 8K, photorealistic.",
+      "clip": [
+        "105",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "3": {
+    "inputs": {
+      "seed": 996598131803703,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1,
+      "model": [
+        "105",
+        0
+      ],
+      "positive": [
+        "9",
+        0
+      ],
+      "negative": [
+        "4",
+        0
+      ],
+      "latent_image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "KSampler"
+  },
+  "4": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "105",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "5": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage"
+  },
+  "9": {
+    "inputs": {
+      "guidance": 3.5,
+      "conditioning": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance"
+  },
+  "12": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "102",
+        0
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "13": {
+    "inputs": {
+      "images": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  },
+  "22": {
+    "inputs": {
+      "model_name": "sam_vit_b_01ec64.pth",
+      "device_mode": "AUTO"
+    },
+    "class_type": "SAMLoader"
+  },
+  "23": {
+    "inputs": {
+      "images": [
+        "76",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  },
+  "32": {
+    "inputs": {
+      "model_name": "bbox/face_yolov8m.pt"
+    },
+    "class_type": "UltralyticsDetectorProvider"
+  },
+  "37": {
+    "inputs": {
+      "text": "GNAVTRTKN face of the person",
+      "clip": [
+        "127",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "38": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "127",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "39": {
+    "inputs": {
+      "guidance": 3.5,
+      "conditioning": [
+        "37",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance"
+  },
+  "50": {
+    "inputs": {
+      "threshold": 0.7,
+      "dilation": 48,
+      "crop_factor": 3,
+      "drop_size": 10,
+      "labels": "all",
+      "bbox_detector": [
+        "51",
+        0
+      ],
+      "image": [
+        "109",
+        0
+      ]
+    },
+    "class_type": "BboxDetectorSEGS"
+  },
+  "51": {
+    "inputs": {
+      "model_name": "bbox/hand_yolov8s.pt"
+    },
+    "class_type": "UltralyticsDetectorProvider"
+  },
+  "67": {
+    "inputs": {
+      "guide_size": 256,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 556045856922527,
+      "steps": 4,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 0.5,
+      "feather": 5,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "tiled_encode": false,
+      "tiled_decode": false,
+      "image": [
+        "109",
+        0
+      ],
+      "segs": [
+        "83",
+        0
+      ],
+      "model": [
+        "111",
+        0
+      ],
+      "clip": [
+        "111",
+        1
+      ],
+      "vae": [
+        "102",
+        0
+      ],
+      "positive": [
+        "125",
+        0
+      ],
+      "negative": [
+        "124",
+        0
+      ]
+    },
+    "class_type": "DetailerForEach"
+  },
+  "68": {
+    "inputs": {
+      "images": [
+        "67",
+        0
+      ]
+    },
+    "class_type": "PreviewImage"
+  },
+  "75": {
+    "inputs": {
+      "target": "confidence",
+      "order": true,
+      "take_start": 0,
+      "take_count": 1,
+      "segs": [
+        "79",
+        0
+      ]
+    },
+    "class_type": "ImpactSEGSOrderedFilter"
+  },
+  "76": {
+    "inputs": {
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 1009736588679054,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 0.7,
+      "feather": 5,
+      "noise_mask": true,
+      "force_inpaint": false,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "tiled_encode": false,
+      "tiled_decode": false,
+      "image": [
+        "67",
+        0
+      ],
+      "segs": [
+        "75",
+        0
+      ],
+      "model": [
+        "127",
+        0
+      ],
+      "clip": [
+        "127",
+        1
+      ],
+      "vae": [
+        "102",
+        0
+      ],
+      "positive": [
+        "39",
+        0
+      ],
+      "negative": [
+        "38",
+        0
+      ]
+    },
+    "class_type": "DetailerForEach"
+  },
+  "79": {
+    "inputs": {
+      "bbox_threshold": 0.6,
+      "bbox_dilation": 32,
+      "crop_factor": 3,
+      "drop_size": 10,
+      "sub_threshold": 0.5,
+      "sub_dilation": 0,
+      "sub_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "post_dilation": 48,
+      "bbox_detector": [
+        "32",
+        0
+      ],
+      "image": [
+        "67",
+        0
+      ],
+      "sam_model_opt": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "ImpactSimpleDetectorSEGS"
+  },
+  "83": {
+    "inputs": {
+      "target": "confidence",
+      "order": true,
+      "take_start": 0,
+      "take_count": 3,
+      "segs": [
+        "50",
+        0
+      ]
+    },
+    "class_type": "ImpactSEGSOrderedFilter"
+  },
+  "101": {
+    "inputs": {
+      "unet_name": "flux1-dev-fp8-e4m3fn.safetensors",
+      "weight_dtype": "fp8_e4m3fn_fast"
+    },
+    "class_type": "UNETLoader"
+  },
+  "102": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader"
+  },
+  "103": {
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp16.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader"
+  },
+  "104": {
+    "inputs": {
+      "filename_prefix": "result",
+      "images": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "SaveImage"
+  },
+  "105": {
+    "inputs": {
+      "lora_name": "b10.safetensors",
+      "strength_model": 1.15,
+      "strength_clip": 1.15,
+      "model": [
+        "111",
+        0
+      ],
+      "clip": [
+        "111",
+        1
+      ]
+    },
+    "class_type": "LoraLoader"
+  },
+  "109": {
+    "inputs": {
+      "image": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "ImpactImageBatchToImageList"
+  },
+  "110": {
+    "inputs": {
+      "images": [
+        "76",
+        0
+      ]
+    },
+    "class_type": "ImageListToImageBatch"
+  },
+  "111": {
+    "inputs": {
+      "lora_name": "FLUX.1-Turbo-Alpha.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "model": [
+        "101",
+        0
+      ],
+      "clip": [
+        "103",
+        0
+      ]
+    },
+    "class_type": "LoraLoader"
+  },
+  "123": {
+    "inputs": {
+      "text": "hand of the person",
+      "clip": [
+        "111",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "124": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "111",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "125": {
+    "inputs": {
+      "guidance": 3.5,
+      "conditioning": [
+        "123",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance"
+  },
+  "127": {
+    "inputs": {
+      "lora_name": "b10.safetensors",
+      "strength_model": 1.3,
+      "strength_clip": 1.3,
+      "model": [
+        "111",
+        0
+      ],
+      "clip": [
+        "111",
+        1
+      ]
+    },
+    "class_type": "LoraLoader"
+  }
+}

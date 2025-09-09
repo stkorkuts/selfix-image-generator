@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <UserSecretsId>1bf6b347-cdbb-4d70-a7ab-c27223893f9b</UserSecretsId>
+        <RootNamespace>Selfix.ImageGenerator.EntryPoint</RootNamespace>
+        <AnalysisLevel>latest-recommended</AnalysisLevel>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="appsettings.Development.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Selfix.ImageGenerator.Infrastructure\Selfix.ImageGenerator.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Selfix.ImageGenerator.Shared\Selfix.ImageGenerator.Shared.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.3" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
+    </ItemGroup>
+
+</Project>

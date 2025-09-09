@@ -1,0 +1,60 @@
+networks:
+  selfix-net:
+    external: true
+    name: selfix-net
+
+services:
+  image-generator:
+    networks:
+      - selfix-net
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: image-generator
+    container_name: image-generator
+    environment:
+      - DOTNET_ENVIRONMENT=${DOTNET_ENVIRONMENT:-Local}
+      
+      - Kafka__BootstrapServer=${KAFKA_BOOTSTRAP_SERVER:-broker:29092}
+      - Kafka__Sasl__KafkaSecurityProtocol=${KAFKA_SECURITY_PROTOCOL:-PLAINTEXT}
+      - Kafka__Sasl__KafkaSaslMechanism=${KAFKA_SASL_MECHANISM:-PLAIN}
+      - Kafka__Sasl__Username=${KAFKA_SASL_USERNAME:-}
+      - Kafka__Sasl__Password=${KAFKA_SASL_PASSWORD:-}
+      - Kafka__GroupId=${KAFKA_GROUP_ID:-selfix}
+      - Kafka__TopicInput=${KAFKA_TOPIC_INPUT:-selfix.image.generate.requests}
+      - Kafka__TopicOutput=${KAFKA_TOPIC_OUTPUT:-selfix.image.generate.responses}
+      
+      - S3__Endpoint=${S3_ENDPOINT:-https://s3.gis-1.storage.selcloud.ru}
+      - S3__AccessKey=${S3_ACCESS_KEY:-}
+      - S3__SecretKey=${S3_SECRET_KEY:-}
+      - S3__Region=${S3_REGION:-gis-1}
+      - S3__AvatarsBucketName=${S3_BUCKET:-selfix-avatars}
+      - S3__ResultImagesBucketName=${S3_RESULT_IMAGES_BUCKET:-selfix-images}
+        
+      - Environment__LorasDir=${ENVIRONMENT_LORAS_DIR:-/workspace/comfyui/models/loras}
+      - Environment__WorkflowsDir=${ENVIRONMENT_WORKFLOWS_DIR:-/workspace/workflows}
+      - Environment__OutputDir=${ENVIRONMENT_OUTPUT_DIR:-/workspace/comfyui/output}
+      - Environment__IsHighVram=${ENVIRONMENT_IS_HIGH_VRAM:-false}
+        
+      - Comfy__Host=${COMFY_HOST:-localhost}
+      - Comfy__Port=${COMFY_PORT:-8188}
+
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    
+    volumes:
+      - ${ML_MODELS_PATH}/unet:/workspace/comfyui/models/unet:ro
+      - ${ML_MODELS_PATH}/clip:/workspace/comfyui/models/clip:ro
+      - ${ML_MODELS_PATH}/vae:/workspace/comfyui/models/vae:ro
+      - ${ML_MODELS_PATH}/segments/sams:/workspace/comfyui/models/sams:ro
+      - ${ML_MODELS_PATH}/segments/ultralytics:/workspace/comfyui/models/ultralytics:ro
+      - ${ML_MODELS_PATH}/loras:/workspace/comfyui/models/loras:rw
+    
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
